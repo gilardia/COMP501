@@ -27,7 +27,7 @@ Once Git is installed, you will need to open the command prompt and keep it open
 	lawrancej@WITR9EZ83Y ~
 	$
 
-Let's understand what this means. The first line lists your username, machine name, and current folder (`~` pronounced tilde, means home directory). By default, the command prompt is open in your home directory. The next line is the command prompt; anything you type will appear after the `$`. You can see your home directory Windows File explorer by navigating to the Desktop and clicking on your name, or you can type in the following and press enter to bring up the File Explorer:
+Let's understand what this means. The first line lists your username, machine name, and current folder (`~` pronounced tilde, means home directory). By default, the command prompt is open in your home directory. The next line is the command prompt; anything you type will appear after the `$`. You can see your home directory in the Windows File Explorer by navigating to the Desktop and clicking on your name, or you can type in the following and press enter to bring up the File Explorer:
 
 	start .
 
@@ -62,13 +62,20 @@ Next, choose a project host, but don't create an account just yet (read on for w
 
 Did you choose a project host? Great! Go ahead and create an account using your *@wit.edu* email address and real name. Once you set up an account successfully, [complete this form](https://docs.google.com/forms/d/1lsSvVQVRlnIKl8qp5sSWwy-BgxyqnYGEvDzGLoQXV28/viewform) so that I know where to look for your work. If you feel like it, you can set up a [Gravatar](http://en.gravatar.com/) with your *@wit.edu* email address so that everyone can associate your user name with your face.
 
-You will need to share the public SSH key you created earlier with the project host. If you haven't copy/pasted anything in the interim, you should be good to go. Bitbucket users: navigate to your user (in the upper right corner) -> Manage account -> SSH keys; [Github users go here](https://github.com/settings/ssh). Click Add key, and then paste in your public SSH key into the key field. For the title, use a nickname for your machine (e.g., laptop).
+You will need to share the public SSH key you created earlier with the project host. If you haven't copy/pasted anything since you put your public key in the clipboard, you should be good to go. [Github users go here](https://github.com/settings/ssh); Bitbucket users: navigate to your user (in the upper right corner) -> Manage account -> SSH keys. The interface for Bitbucket and Github are pretty much the same at this point. Click Add key, and then paste in your public SSH key into the key field. For the title, use a nickname for your machine (e.g., laptop). In case you are unsure what a public key looks like, here's one of mine, although using my public key won't work for you.
+
+	ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtEON8Q8KF98Nkn/hbW4Z2GrvB2qgMf/
+	rubgSmjiKpe8MQps86UHxYyqd+ZsHaCJrrwi7PjH0iakvxvSnNJUzoheBETKyzTJhsB
+	RTdgybGmvK0rWl3/S7Da0uJTmb0OvawacS+pXjZdBUCQKcIPAQg2Ain+dmJr2LkCFHK
+	WFoH7O+4dYLTsowmpAa2Le/4q0lYTYBXL6rzXJi3Us89pRnmvjPJxDJ7M2N2lx9EtaQ
+	B3B/48SHaBafbTwtOMiVcn/xLYithiMPOnt+sJ/zJsBF+4MpboUXpq6h1Vjz8W0KBL6
+	k0P+D6WBqil/edyIyyTVP4sJeYIrIykpKdDE9U1zWw== lawrancej@wit.edu
 
 At this point, you have set up your account on a project host. Huzzah!
 
 ## Create your local course repository
 
-You now need to create a Git repository on your machine to save (commit) your work and get material from me. Copy/paste the following commands into the command prompt (don't even think about typing it in manually). Speaking of which, to paste into a command prompt in Windows, press Insert on the keyboard (Ctrl-V doesn't work); if that doesn't work, right click the command prompt window title, select Edit -> Paste.
+You now need to create a Git repository on your machine to save (commit) your work and get material from me. Copy/paste the following commands into the command prompt (don't even think about typing it in manually). Speaking of which, to paste into a command prompt in Windows, press Insert on the keyboard (Ctrl-V doesn't work); if that doesn't work, right click the command prompt window title, select **Edit -> Paste**.
 
 	git init COMP501 # Create local git repository
 	cd COMP501       # Change directory (cd) into the COMP501 folder
@@ -92,7 +99,7 @@ Now let's create a remote private repository on the project host to submit your 
 
 If you are using Github, and it asks you for money, just make the repository public for now. Don't forget to [request private repositories as a student](http://github.com/edu), and when Github confirms that you are free to do so, make the repository you created private later by clicking on the wrench and screwdriver icon (it's **Settings**, not **Account settings**) and scroll down to the **Danger Zone** and click **Make private**. 
 
-Once created, you will see your new remote repository on the project host, and you need to study this page carefully. Go ahead and bookmark or star this page in your browser so you can get back to it later. On this page, the you will see instructions for command prompt, but don't type it in just yet (Bitbucket users: pretend you are starting from scratch). We only need to run one command: find the line in the instructions that says `git remote add origin ...` and copy/paste it into the command prompt and press enter. Then, type in the following at the command prompt and press enter.
+Once created, you will see your new remote repository on the project host, and you need to study this page carefully. Go ahead and bookmark or star this page in your browser so you can get back to it later. On this page, you will see command prompt instructions, but don't type these in just yet (Bitbucket users: pretend you are starting from scratch). We only need to run one command: find the line in the instructions that says `git remote add origin ...` and copy/paste it into the command prompt and press enter. Then, type in the following at the command prompt and press enter.
 
 	git push -u origin master
 
@@ -104,9 +111,9 @@ At this point, your local and remote repsitories are set up! Hooray!
 
 ## Share your repository with me, and watch my repository
 
-I'd like to take a peek at your repository, but I can't! Indeed, nobody but you can see it (hence the term private). You need to add me as a collaborator to your private repository so that I can see all the hard work that you're up to. Bitbucket users: click the gear icon (It's **Administration**), select **Access management**, enter `lawrancej` under Users, select **Admin**, and click Add. Github users: click the wrench and screwdriver icon (It's **Settings**, not **Account settings**), click **Collaborators**, enter `lawrancej`, and click Add.
+I'd like to take a peek at your repository, but I can't! Indeed, nobody but you can see it (hence the term private repository). You need to add me as a collaborator to your private repository so that I can see all the hard work that you're up to. Bitbucket users: click the gear icon (It's **Administration**), select **Access management**, enter `lawrancej` under Users, select **Admin**, and click Add. Github users: click the wrench and screwdriver icon (It's **Settings**, not **Account settings**), click **Collaborators**, enter `lawrancej`, and click Add.
 
-Now that I can see you, why don't you watch my repository, so you know whenever I make updates? I make updates frequently, and I won't email you when I make changes. [Bitbucket users go here](https://bitbucket.org/lawrancej/comp501). [Github users go here](https://github.com/lawrancej/COMP501). On my repository page, click on the eye icon to watch my repository.
+Now that I can see you, why don't you watch my repository, so you know whenever I make updates? I make updates frequently, and I won't email you when I make changes. [Bitbucket users go here](https://bitbucket.org/lawrancej/comp501). [Github users go here](https://github.com/lawrancej/COMP501). The interface for watching my repository is similar for Bitbucket and Github: on my repository page, click on the eye icon to watch my repository.
 
 Now we can see each other's stuff. Sweet!
 
