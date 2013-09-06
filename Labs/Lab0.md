@@ -8,7 +8,7 @@ These instructions assume that you are using Windows, but should work fine on Ma
 
 ## Prolog setup
 
-[Prolog](http://www.swi-prolog.org/Download.html) is a logic programming language. Download it!
+[Prolog](http://www.swi-prolog.org/download/stable) is a logic programming language. Download it!
 
 ## Git setup
 
@@ -109,7 +109,7 @@ Reload your Bitbucket or Github repository page. If all goes well, you will see 
 
 At this point, your local and remote repsitories are set up! Hooray!
 
-If git asked for your password earlier during a push, and you set up SSH keys properly, type in the following to remove the link to origin:
+**If git asked for your password earlier during a push**, and you set up SSH keys properly, type in the following to remove the link to origin:
 
 	git remote rm origin
 
