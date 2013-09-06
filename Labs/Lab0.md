@@ -99,15 +99,25 @@ Now let's create a remote private repository on the project host to submit your 
 
 If you are using Github, and it asks you for money, just make the repository public for now. Don't forget to [request private repositories as a student](http://github.com/edu), and when Github confirms that you are free to do so, make the repository you created private later by clicking on the wrench and screwdriver icon (it's **Settings**, not **Account settings**) and scroll down to the **Danger Zone** and click **Make private**. 
 
-Once created, you will see your new remote repository on the project host, and you need to study this page carefully. Go ahead and bookmark or star this page in your browser so you can get back to it later. On this page, you will see command prompt instructions, but don't type these in just yet. Bitbucket users: pretend you are starting from scratch. Github users: click on **SSH**. We only need to run one command: find the line in the instructions that says `git remote add origin ...` and copy/paste it into the command prompt and press enter. Then, type in the following at the command prompt and press enter.
+Once created, you will see your new remote repository on the project host, and you need to study this page carefully. Go ahead and bookmark or star this page in your browser so you can get back to it later. On this page, you will see command prompt instructions, but don't type these in just yet. Bitbucket users: pretend you are starting from scratch. Github users: click on **SSH**. We only need to run one command: find the line in the instructions that says `git remote add origin ...` and copy/paste it into the command prompt and press enter. Then, type in the following at the command prompt and press enter to push the contents of your local repository to the project host.
 
-	git push -u origin master
+	git push --all origin
 
-If it asks for your password, you didn't set up the SSH keys properly. If this happens, don't fret, you can still type in your project host password and press Enter (or go back and fix your SSH keys). By the way, don't expect to see anything as you type in your password, nothing will appear (it's not broken, that's a security feature).
+If it asks for your password, type in your project host password and press Enter for now. Don't expect to see anything as you type it in, because nothing will appear (it's not broken, it's a security feature). Either you didn't set up SSH keys properly, or origin isn't an SSH URL. To diagnose the problem, type in `git remote -v` and examine the output. If origin is a URL starting with SSH or GIT, then SSH keys are not set up. If origin is a URL starting with HTTPS, then you need to change the origin URL in a moment; follow the next step first.
 
-Reload your Bitbucket or Github repository page. If all goes well, you see **Welcome to COMP501**. This indicates that you successfully cloned my repository on your machine and pushed it over to your private repository on the project host. Later on, if you ever wonder if you were able to push something over successfully, you can take a look at your repository on the project host. Those of you in the know may ask: why not just fork my repsitory instead? The answer: because Github won't allow you to fork a public repository into a private repository.
+Reload your Bitbucket or Github repository page. If all goes well, you will see **Welcome to COMP278**. This indicates that you successfully cloned my repository on your machine and pushed it over to your private repository on the project host. Later on, if you ever wonder if you were able to push something over successfully, you can take a look at your repository on the project host. Those of you in the know may ask: why not just fork my repsitory instead? The answer: because Github won't allow you to fork a public repository into a private repository.
 
 At this point, your local and remote repsitories are set up! Hooray!
+
+If git asked for your password earlier during a push, and you set up SSH keys properly, type in the following to remove the link to origin:
+
+	git remote rm origin
+
+Then, go to your repository page and look for SSH. The URL that you want for origin will start with `git@bitbucket.org` or `git@github.com`. Copy this URL and type in the following command (replacing the comment with your SSH URL) to change your origin URL.
+
+	git remote add origin   # Replace this comment with your SSH URL
+
+Try to push again.
 
 ## Share your repository with me, and watch my repository
 
