@@ -42,6 +42,12 @@ kaprekar :: Integer -> Integer
 
 
 -- Kaprekar's list
--- Write a program that computes Kaprekar's routine for a number repeatedly until it reaches its fixed point
+-- Write a function that computes Kaprekar's routine for a number repeatedly until it reaches its fixed point
 -- For example, kaprekarList 5432 -> [5432, 3087, 8352, 6174]
 kaprekarList :: Integer -> [Integer]
+
+-- Spelling alphabet
+-- Translate a string into a string spelled out using the NATO phonetic alphabet
+-- http://en.wikipedia.org/wiki/NATO_phonetic_alphabet
+-- For example, say "Fearing" -> "Foxtrot Echo Alpha Romeo India November Golf"
+say :: String -> String
