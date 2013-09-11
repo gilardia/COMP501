@@ -1,5 +1,11 @@
 # Haskell Background
 
+## Import stuff
+
+In GHCi, typ in this to import list functions:
+
+	import Data.List
+
 ## Lists and list functions
 In GHCi, type in the following to see what you get. What's going on with each of these commands?
 
