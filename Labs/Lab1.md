@@ -11,7 +11,7 @@ First, pull my repository into your local repository, using either the command l
 
 * In TortoiseGit, navigate to your course repository. You can get to it by opening the Desktop folder, clicking on your name, and then selecting the COMP501 folder. Once there, right click inside the folder (but not on any particular file), click **TortoiseGit -> Pull...**. For the Remote, select upstream and click OK.
 
-* In Git Extensions, open the COMP501 repository, and click on Pull (the down arrow). For the Remote, select upstream and click Pull.
+* In Git Extensions, open the COMP501 repository, and click on Pull (the down arrow). For the Remote, select upstream. For the Remote branch, select master. Click Pull.
 
 Second, open Lab1.hs, and practice with the functions you see there.
 
