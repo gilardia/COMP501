@@ -1,0 +1,47 @@
+import Data.List
+
+-- Find the last element in the list.
+-- Fix the syntax error so that myLast [1 .. 6] returns 6
+-- Note: I won't accept myLast = last
+myLast :: [a] -> a
+myLast [x] = x
+myLast _:xs = myLast xs
+
+-- Return whether the list is a palindrome
+-- Fix the error so that isPalindrome "tacocat" is true
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome xs = xs = reverse xs
+
+-- Hailstone sequence
+-- http://en.wikipedia.org/wiki/Hailstone_sequence
+-- Write a program that computes the hailstone sequence for a given number
+-- For example, hailstone 5 -> [5 16 8 4 2 1]
+hailstone :: Integer -> [Integer]
+
+
+-- Write a function to convert a number into a list of digits
+-- For example, toDigits 30 -> [3, 0]
+unpack :: Integer -> [Integer]
+
+
+-- Write a function to convert a list of digits into a number
+-- For example, fromDigits [3, 4, 5] -> 345
+pack :: [Integer] -> Integer
+
+
+-- Kaprekar's routine: 
+-- http://en.wikipedia.org/wiki/6174_%28number%29
+-- 1. Arrange the digits in ascending order
+-- 2. Arrange the digits in descending order
+-- Subtract the smaller number from the larger number
+-- For example, kaprekar 5432 -> 3087
+-- you will need to import Data.List (just put import Data.List on top of the file) for sort and reverse
+-- For example, sort [ 1, 2, 5, 4] -> [1, 2, 4, 5]
+-- reverse [1, 3, 4] -> [4, 3, 1]
+kaprekar :: Integer -> Integer
+
+
+-- Kaprekar's list
+-- Write a program that computes Kaprekar's routine for a number repeatedly until it reaches its fixed point
+-- For example, kaprekarList 5432 -> [5432, 3087, 8352, 6174]
+kaprekarList :: Integer -> [Integer]
