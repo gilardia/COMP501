@@ -13,9 +13,9 @@ First, pull my repository into your local repository, using either the command l
 
 * In Git Extensions, open the COMP501 repository, and click on Pull (the down arrow). For the Remote, select upstream and click Pull.
 
-Open Lab1.hs, and practice with the functions you see there.
+Second, open Lab1.hs, and practice with the functions you see there.
 
-Once done, don't forget to commit and push your work using either the command line, TortoiseGit or Git Extensions.
+Finally, don't forget to commit and push your work using either the command line, TortoiseGit or Git Extensions. It's a good habit to commit and push frequently.
 
 * In the command prompt (Git Bash), type in the following:
 
