@@ -6,8 +6,8 @@ First, pull my repository into your local repository, using either the command l
 
 * In the command prompt (Git Bash), type in the following:
 
-	cd COMP501 # Go into your course folder
-	git pull upstream master # Merge this lab into your local repository.
+		cd COMP501 # Go into your course folder
+		git pull upstream master # Merge this lab into your local repository.
 
 * In TortoiseGit, navigate to your course repository. You can get to it by opening the Desktop folder, clicking on your name, and then selecting the COMP501 folder. Once there, right click inside the folder (but not on any particular file), click **TortoiseGit -> Pull...**. For the Remote, select upstream and click OK.
 
@@ -19,8 +19,8 @@ Finally, don't forget to commit and push your work using either the command line
 
 * In the command prompt (Git Bash), type in the following:
 
-	git commit -am "Finished Lab 1" # Record your changes into a commit
-	git push --all origin # Toss it over to your remote private repository
+		git commit -am "Finished Lab 1" # Record your changes into a commit
+		git push --all origin # Toss it over to your remote private repository
 
 * In TortoiseGit, navigate to your course repository. You can get to it by opening the Desktop folder, clicking on your name, and then selecting the COMP501 folder. Once there, right click inside the folder (but not on any particular file), click **Git Commit... -> "master"**. Enter your message (e.g., "Finished Lab 1" or "Work in progress" or even "Stupid code won't compile. What's wrong?"), and make sure Lab1.hs is checked. Then click OK. Click Push... when TortoiseGit says you committed successfully, select origin for your remote, and click OK.
 
