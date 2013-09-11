@@ -18,11 +18,7 @@ In this lab, you will download, install and configure Git so that you can commit
 
 ## Download, install and configure Git
 
-First, [download and install Git from here](http://git-scm.com). With one exception, the default settings in the installer are fine, so click *Next*, *Continue*, or *Finish* to move along. When it is an option, be sure to select **Run Git and included Unix tools from the Windows Command Prompt**. This will allow you to use Git outside Git Bash if you wish to do so.
-
-Also, [download and install TortoiseGit](http://code.google.com/p/tortoisegit/). The default settings in that installer are fine, so click to move the installer along. TortoiseGit allows you to commit and push your work directly to the project host from the Windows File Explorer, and also includes a nice diff viewer and merge tool. Similar tools for Mac/Linux include [GitX](http://gitx.frim.nl/), [KDiff3](http://kdiff3.sourceforge.net/), and [Meld](http://meldmerge.org/).
-
-Let's configure TortoiseGit before we configure Git. From the Start Menu, open TortoiseGit Settings: **Start -> All Programs -> TortoiseGit -> Settings**. Click on Network, then change the SSH client from Plink to `C:\Program Files\Git\bin\ssh.exe`. Make sure that file actually exists on your machine by clicking **Browse** and navigating there; if you can't find it, try starting in the 64 bit Program Files folder. Either way, don't forget to **Apply** your changes before you close Settings.
+[Download and install Git from here](http://git-scm.com). With one exception, the default settings in the installer are fine, so click *Next*, *Continue*, or *Finish* to move along. When it is an option, be sure to select **Run Git and included Unix tools from the Windows Command Prompt**. This will allow you to use Git outside Git Bash if you wish to do so.
 
 Once Git is installed, you will need to open the command prompt and keep it open for the duration of this lab. From the Start Menu, open Git Bash: **Start -> All Programs -> Git -> Git Bash**. In Mac/Linux, open **Terminal**. You will see a window with text inside; this is the command prompt. When you open the command prompt, you will see something like this:
 
@@ -44,7 +40,29 @@ Git doesn't know you (and don't worry if you don't know Git just yet), so introd
 	git config --global user.name "Joey Lawrance"    # Use your name
 	git config --global user.email lawrancej@wit.edu # Use your email
 
-You will need to set up SSH keys now so you can easily submit your work to the project host that you will soon choose. SSH keys allow you to authenticate and send changes securely to a project host without the trouble of Git asking you to enter a password all the time. Type in the following command to generate SSH public/private keys.
+At this point, you are done downloading, installing and configuring Git. Yay!
+
+## Download, install and configure Git Extensions or TortoiseGit
+
+Several programs provide graphical interfaces to Git, but I recommend Git Extensions. Git Extensions is a cross-platform frontend to Git that operates on its own, and also integrates with the Windows File Explorer. TortoiseGit is a similar tool available only for Windows, but it's not as polished as Git Extensions. Feel free to install just one of these graphical frontends.
+
+If you want to use Git Extensions, [download and install it from here](http://code.google.com/p/gitextensions/). The default settings are fine, but be sure to **Install KDiff** and select **OpenSSH** when they are options. To open up Git Extensions, from the Start Menu, open **Start -> All Programs -> Git Extensions**. It will ask you for your language (pretend you're British). You will see a checklist. If everything is installed properly, everything will be green and you can push Ok to proceed.
+
+If you want to use TortoiseGit, [download and install it from here](http://code.google.com/p/tortoisegit/). The default settings in that installer are fine, so click to move the installer along. To configure TortoiseGit, from the Start Menu, open TortoiseGit Settings: **Start -> All Programs -> TortoiseGit -> Settings**. Click on Network, then change the SSH client from Plink to `C:\Program Files\Git\bin\ssh.exe`. Make sure that file actually exists on your machine by clicking **Browse** and navigating there; if you can't find it, try starting in the 64 bit Program Files folder. Either way, don't forget to **Apply** your changes before you close Settings.
+
+You are done getting your graphical frontend to Git ready. Whee!
+
+## Set up an account on a project host
+
+Next, choose a project host, but don't create an account just yet (read on for why). The choices are [Bitbucket](http://bitbucket.org) or [Github](http://github.com). I use both project hosts, but you can use just one. Bitbucket gives you free private repositories by default, so it's easy to set up. However, Github has a much slicker interface but requires that you [request private repositories for educational purposes as a student](http://github.com/edu), unless money is no object for you. Github's turn around time is short; however, the start of a semester is the busiest time for this, and an actual person reviews all requests from students. **You need to ensure that your repository is private, otherwise I won't post feedback to you.**
+
+Did you choose a project host? Great! Go ahead and create an account using your *@wit.edu* email address and real name. Once you set up an account successfully, [complete this form](https://docs.google.com/forms/d/1lsSvVQVRlnIKl8qp5sSWwy-BgxyqnYGEvDzGLoQXV28/viewform) so that I know where to look for your work. If you feel like it, you can set up a [Gravatar](http://en.gravatar.com/) with your *@wit.edu* email address so that everyone can associate your user name with your face.
+
+At this point, you have set up your account on a project host. Huzzah!
+
+## Set up SSH keys
+
+You will need to set up SSH keys now so you can easily submit your work to the project host that you chose. SSH keys allow you to authenticate and send changes securely to a project host without the trouble of Git asking you to enter a password all the time. Type in the following command to generate SSH public/private keys.
 
 	ssh-keygen -t rsa
 
@@ -56,15 +74,7 @@ Next, copy the public key to the clipboard using one of the commands below. Reme
 	cat ~/.ssh/id_rsa.pub | pbcopy         # On Mac OS X
 	cat ~/.ssh/id_rsa.pub | xclip          # On Linux
 
-At this point, you are done downloading, installing and configuring Git. Yay!
-
-## Set up an account on a project host
-
-Next, choose a project host, but don't create an account just yet (read on for why). The choices are [Bitbucket](http://bitbucket.org) or [Github](http://github.com). I use both project hosts, but you can use just one. Bitbucket gives you free private repositories by default, so it's easy to set up. However, Github has a much slicker interface but requires that you [request private repositories for educational purposes as a student](http://github.com/edu), unless money is no object for you. Github's turn around time is short; however, the start of a semester is the busiest time for this, and an actual person reviews all requests from students. **You need to ensure that your repository is private, otherwise I won't post feedback to you.**
-
-Did you choose a project host? Great! Go ahead and create an account using your *@wit.edu* email address and real name. Once you set up an account successfully, [complete this form](https://docs.google.com/forms/d/1lsSvVQVRlnIKl8qp5sSWwy-BgxyqnYGEvDzGLoQXV28/viewform) so that I know where to look for your work. If you feel like it, you can set up a [Gravatar](http://en.gravatar.com/) with your *@wit.edu* email address so that everyone can associate your user name with your face.
-
-You will need to share the public SSH key you created earlier with the project host. If you haven't copy/pasted anything since you put your public key in the clipboard, you should be good to go. [Github users go here](https://github.com/settings/ssh); Bitbucket users: navigate to your user (in the upper right corner) -> Manage account -> SSH keys. The interface for Bitbucket and Github are pretty much the same at this point. Click Add key, and then paste in your public SSH key into the key field. For the title, use a nickname for your machine (e.g., laptop). In case you are unsure what a public key looks like, here's one of mine, although using my public key won't work for you.
+You will need to share the public SSH key you just created with the project host while it's still in your clipboard. [Github users go here](https://github.com/settings/ssh); Bitbucket users: navigate to your user (in the upper right corner) -> Manage account -> SSH keys. The interface for Bitbucket and Github are pretty much the same at this point. Click Add key, and then paste in your public SSH key into the key field. For the title, use a nickname for your machine (e.g., laptop). In case you are unsure what a public key looks like, here's one of mine, although using my public key won't work for you.
 
 	ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtEON8Q8KF98Nkn/hbW4Z2GrvB2qgMf/
 	rubgSmjiKpe8MQps86UHxYyqd+ZsHaCJrrwi7PjH0iakvxvSnNJUzoheBETKyzTJhsB
@@ -73,11 +83,11 @@ You will need to share the public SSH key you created earlier with the project h
 	B3B/48SHaBafbTwtOMiVcn/xLYithiMPOnt+sJ/zJsBF+4MpboUXpq6h1Vjz8W0KBL6
 	k0P+D6WBqil/edyIyyTVP4sJeYIrIykpKdDE9U1zWw== lawrancej@wit.edu
 
-At this point, you have set up your account on a project host. Huzzah!
+Now you've got SSH keys set up. Awesome!
 
 ## Create your local course repository
 
-You now need to create a Git repository on your machine to save (commit) your work and get material from me. Copy/paste the following commands into the command prompt (don't even think about typing it in manually). Speaking of which, to paste into a command prompt in Windows, press Insert on the keyboard (Ctrl-V doesn't work); if that doesn't work, right click the command prompt window title, select **Edit -> Paste**.
+You now need to create a Git repository on your machine to save (commit) your work and get material from me. Copy/paste the following commands into the command prompt (don't even think about typing it in manually). You may need to copy line by line to get it to work. Speaking of which, to paste into a command prompt in Windows, press Insert on the keyboard (Ctrl-V doesn't work); if that doesn't work, right click the command prompt window title, select **Edit -> Paste**. 
 
 	git init COMP501 # Create local git repository
 	cd COMP501       # Change directory (cd) into the COMP501 folder
@@ -179,15 +189,21 @@ And with that, you just completed lab 0. Booyah!
 
 By the way, I will post new material frequently. Pull (fetch and merge) to receive updates.
 
-	git pull origin master
+	git pull upstream master
 
 Occasionally, this command won't work because we made conflicting changes. To fix a merge conflict, look for conflict markers and revise as necessary. This command makes it easier:
 
 	git mergetool
 
-By the way, you may need to select a merge tool (just once) to get this command to work. Assuming you installed TortoiseGit, try this:
+By the way, you may need to select a merge tool (just once) to get this command to work.
+
+If you installed TortoiseGit, try this:
 
 	git config --global merge.tool tortoisemerge
+
+If you installed Git Extensions, try this:
+
+	git config --global merge.tool kdiff3
 
 If you want to keep only my changes, checkout their version.
 
