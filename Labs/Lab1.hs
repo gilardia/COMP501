@@ -18,16 +18,28 @@ isPalindrome xs = xs == reverse xs
 -- For example, hailstone 5 -> [5 16 8 4 2 1]
 --hailstone :: Integer -> [Integer]
 
+a `plus` b = a+b
+
 f n
     | n `mod` 2 == 0 = n `div` 2
     | otherwise = 3*n+1
 
-
+hailstone 1 = [1] -- base case (we hope)
+hailstone n = n:hailstone (f n)
 
 -- Write a function to convert a number into a list of digits
 -- For example, toDigits 30 -> [3, 0]
 --unpack :: Integer -> [Integer]
 
+convertit n = (fromEnum n) - 48
+
+unpack n = map convertit (show n)
+
+{-
+-- Also works
+unpack n = map convertit (x:xs)
+	where (x:xs) = (show n)
+-}
 
 -- Write a function to convert a list of digits into a number
 -- For example, fromDigits [3, 4, 5] -> 345
