@@ -1,4 +1,6 @@
 import Data.List
+import Data.Maybe
+import Data.Char
 
 -- Find the last element in the list.
 -- Fix the syntax error so that myLast [1 .. 6] returns 6
@@ -68,3 +70,13 @@ unpack n = map convertit (x:xs)
 -- http://en.wikipedia.org/wiki/NATO_phonetic_alphabet
 -- For example, say "Fearing" -> "Foxtrot Echo Alpha Romeo India November Golf"
 --say :: String -> String
+
+toNATO x = fromJust (lookup x nato)
+	where nato = zip ['a'..'z'] ["Alfa", "Bravo","Charlie", "Delta", "Echo", "Foxtrot"]
+
+say string = map toLower (unwords (map (toNATO . toLower) string))
+
+-- convert to separate characters
+-- Haskell Strings are [Char]
+-- have the array ready (it should be hard coded)
+-- join everything back together into a string
