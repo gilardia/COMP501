@@ -2,9 +2,12 @@
 
 # Adapted from: http://www.animal-machine.com/blog/2010/04/a-haskell-adventure-in-windows/
 
-# To run this, you must run Git Bash as administrator.
+# To run this, you must exit Haskell, if you are in it.
+# You must run this by running Git Bash as administrator.
 # In the start menu, right click on Git Bash -> Run As Administrator.
 
+# FIXME: Support for SDL-mixer, SDL-ttf.
+# Something's wrong with those libraries on Windows.
 # FIXME: Support SDL-gfx (currently downloads it, but nothing else)
 
 # Determine CPU
@@ -17,7 +20,7 @@ fi
 # SDL folders
 SDL=/c/SDL
 BIN=$SDL/bin
-LIB=$SDL/lib
+LIB="`which ghc | sed -e s/ghc//`" #$SDL/lib
 INCLUDE=$SDL/include
 PATH=$PATH:$BIN:$LIB
 
@@ -68,20 +71,20 @@ http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.12-VC.zip
 URL
 
 # Move disparate SDL libs/includes to one folder
-mkdir -p $LIB
+mkdir -p "$LIB"
 mkdir -p $INCLUDE
 mkdir -p $BIN
 
 # Copy main SDL to standard location
 cp $SDL/SDL-1.2.15/bin/sdl-config $BIN
-cp $SDL/SDL-1.2.15/bin/SDL.dll $LIB
-cp $SDL/SDL-1.2.15/lib/* $LIB
+cp $SDL/SDL-1.2.15/bin/SDL.dll "$LIB"
+cp $SDL/SDL-1.2.15/lib/* "$LIB"
 cp --recursive $SDL/SDL-1.2.15/include/* $INCLUDE
 
 # Copy add-on libraries to standard location
 for dir in $SDL/SDL_* ; do
 	cp --recursive $dir/include/* $INCLUDE 2> /dev/null
-	cp --recursive $dir/lib/$CPU/* $LIB 2> /dev/null
+	cp --recursive $dir/lib/$CPU/* "$LIB" 2> /dev/null
 done
 
 rm -rf $SDL/SDL*
@@ -105,49 +108,30 @@ make_patch SDL-ttf-0.6.2 TTF
 # Install Haskell SDL binding
 for dir in SDL-*; do
 	cd $dir
-	runghc Setup.lhs configure --extra-include-dirs=$INCLUDE --extra-include-dirs=$INCLUDE/SDL --extra-lib-dirs=$LIB
+	runghc Setup.lhs configure --extra-include-dirs=$INCLUDE --extra-include-dirs=$INCLUDE/SDL --extra-lib-dirs="$LIB"
 	runghc Setup.lhs build
 	runghc Setup.lhs install
 	cd ..
 done
 
-exit
+# Clean up
+rm -rf SDL-*
+rm -rf $SDL
 
-cd ..
-rm -rf SDL-* # Clean up Haskell bindings
-
-printf ";C:\\SDL\\lib" > /dev/clipboard
-
-cat <<INSTRUCTIONS
-
-
-The Haskell SDL installation is ALMOST complete.
-You need to add C:\SDL\lib to the System Path.
-
-Lucky you, I have already copied that path to the clipboard.
-
-Here's what you need to do, step-by-step:
-
-1. Go to Start -> Computer -> System properties -> Advanced system settings
-2. Select Environment variables...
-3. Under system variables, select Path and click Edit...
-4. Press the right arrow key to make sure nothing is selected.
-5. Press Ctrl-V. If you are certain that you added to the path, click OK.
-6. Come back here and press enter. More instructions await.
-INSTRUCTIONS
-
-echo "You did add C:\\SDL\\lib to the System path, right?"
-read
+# Haskell SDL tutorial
+cd
+git clone https://github.com/snkkid/LazyFooHaskell.git
+cd LazyFooHaskell
+start .
 
 cat <<INSTRUCTIONS
-Okay, I was just checking.
 
-All right, now I am cloning a tutorial for using SDL with Haskell.
+Now I am cloning a tutorial for using SDL with Haskell.
 You can get to it by doing:
 
     cd ~/LazyFooHaskell
 
-You can build each lesson by doing:
+You can build each lesson by typing this (not literally):
 
     cd lessonXX
     ghc lessonXX.hs
@@ -157,7 +141,3 @@ And then type:
     lessonXX.exe
 INSTRUCTIONS
 
-cd
-git clone https://github.com/snkkid/LazyFooHaskell.git
-cd LazyFooHaskell
-start .
