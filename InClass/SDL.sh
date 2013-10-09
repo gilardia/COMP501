@@ -6,7 +6,7 @@
 # 1. Exit Haskell, if it is running.
 # 2. Running Git Bash as administrator. Start -> right click on Git Bash -> Run As Administrator.
 
-# FIXME: Support for SDL-mixer, SDL-ttf.
+# FIXME: Support for SDL-ttf.
 # Something's wrong with those libraries on Windows.
 # FIXME: Support SDL-gfx (currently downloads it, but nothing else)
 
@@ -105,11 +105,27 @@ make_patch SDL-image-0.6.1 Image
 make_patch SDL-mixer-0.6.1 Mixer
 make_patch SDL-ttf-0.6.2 TTF
 
+cd SDL-mixer-0.6.1
+patch -p1 <<PATCH
+--- a/Graphics/UI/SDL/Mixer/General.hsc
++++ b/Graphics/UI/SDL/Mixer/General.hsc
+@@ -1,4 +1,8 @@
+ #include <SDL_mixer.h>
++#include "SDL.h"
++#ifdef main
++#undef main
++#endif
+ -----------------------------------------------------------------------------
+ -- |
+ -- Module      :  Graphics.UI.SDL.Mixer.General
+PATCH
+cd ..
+
 # Take a snapshot of the work we did for debugging.
 cd ..
 git init
-git add bin haskell include lib 2> /dev/null
-git commit -m "Checkpoint." > /dev/null
+git add bin haskell include lib > /dev/null 2> /dev/null
+git commit -m "Checkpoint." > /dev/null 2> /dev/null
 fi
 
 # Install SDL
@@ -149,3 +165,4 @@ And then type:
     lessonXX.exe
 INSTRUCTIONS
 
+# cabal install SDL SDL-ttf SDL-image --extra-include-dirs=$INCLUDE --extra-include-dirs=$INCLUDE/SDL --extra-lib-dirs="$INSTALL"
