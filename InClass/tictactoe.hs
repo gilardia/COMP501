@@ -30,6 +30,8 @@ instance Show Game where -- sorta like implementing an interface, (e.g., Game im
 
 initialGame = Game initialBoard X
 
+rows :: Map.Map (Int, Int) Cell -> [[Cell]]
+
 {-
 takeTurn :: Game -> (Int, Int) -> Game
 takeTurn game@Game { board=b, player=p } (i, j)
@@ -42,6 +44,21 @@ validMove board i j
 	| 
 	| 
 -}
+
+takeTurn :: Game -> Int -> Int -> Game
+
+switch :: Cell -> Cell -- switch players
+
+validMove :: Map.Map (Int, Int) Cell -> Int -> Int -> Bool -- is the move valid?
+
+diagonals :: Map.Map (Int, Int) Cell -> [[Cell]] -- get a list of diagonals
+
+winner :: Map.Map (Int, Int) Cell -> Bool -- is there a winner?
+
+gameOver :: Map.Map (Int, Int) Cell -> Bool -- is the game over? either somebody won, or there's no blanks left
+
+play :: Game -> IO Game
+
 
 main = do -- pretty much our main function
 	print initialGame
