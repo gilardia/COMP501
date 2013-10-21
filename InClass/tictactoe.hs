@@ -12,8 +12,9 @@ instance Show Cell where -- sorta like implementing an interface, (e.g., Cell im
 	show O = "O"
 
 -- Initialize board
--- First attempt: initialBoard = [[Blank, Blank, Blank], [Blank, Blank, Blank], [Blank, Blank, Blank]]
-initialBoard = [row, row, row] where row = take 3 $ repeat Blank -- this is just a constant to declare a blank board.
+-- initialBoard = [[Blank, Blank, Blank], [Blank, Blank, Blank], [Blank, Blank, Blank]]
+-- initialBoard = [row, row, row] where row = take 3 $ repeat Blank -- this is just a constant to declare a blank board.
+initialBoard = replicate 3 $ replicate 3 Blank
 
 data Game = Game { -- sorta like a struct (e.g., struct Game { Cell[3][3] board; Cell player;})
 	board :: [[Cell]],
@@ -21,9 +22,26 @@ data Game = Game { -- sorta like a struct (e.g., struct Game { Cell[3][3] board;
 }
 
 instance Show Game where -- sorta like implementing an interface, (e.g., Game implements Show)
-	show Game { board=b, player=p } = "It's player " ++ show p ++ "'s turn\n"
+	show Game { board=b, player=p } = "It's player " ++ show p ++ "'s turn\n" ++
+		(foldl1 rows $ map (foldl1 cols . map show) b)
+	 where
+	 	rows x y = x ++ "\n-----------\n" ++ y
+	 	cols x y = x ++ " | " ++ y
 
 initialGame = Game initialBoard X
+
+{-
+takeTurn :: Game -> (Int, Int) -> Game
+takeTurn game@Game { board=b, player=p } (i, j)
+	| validMove b i j = game -- this is not right -- guard is like an if sorta
+	| otherwise = game -- the game doesn't change
+
+validMove :: [[Cell]] -> Int -> Int
+validMove board i j
+	| 
+	| 
+	| 
+-}
 
 main = do -- pretty much our main function
 	print initialGame
