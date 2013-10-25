@@ -1,15 +1,17 @@
-module Main (Cell(Blank, X, O), Game, initialGame, takeTurn, play, main) where
+module Main (Cell(Blank, X, O), Game, switch, board, player, initialGame, takeTurn, play, main) where
 -- Tic Tac Toe
 -- ghc the_name_of_this_file.hs
 -- the_name_of_this_file.exe
 
 -- Define a tic-tac-toe board type
 
+import Graphics.UI.SDL
+import Graphics.UI.SDL.Image
 import qualified Data.Map as Map
 import Data.List
 -- analogous to import in Java
 
-data Cell = Blank | X | O -- One of 3 possible cell types. it's sorta like an enum (e.g., enum { Blank, X, O })
+data Cell = Blank | X | O deriving (Eq, Ord) -- One of 3 possible cell types. it's sorta like an enum (e.g., enum { Blank, X, O })
 
 instance Show Cell where -- sorta like implementing an interface, (e.g., Cell implements Show)
 	show Blank = " "
@@ -47,7 +49,8 @@ takeTurn game@Game { board=b, player=p } (i, j)
 	}
 
 switch :: Cell -> Cell -- switch players: x becomes o, o becomes x
-switch cell = Blank -- FIXME
+switch O = X -- FIXME
+switch X = O
 
 validMove :: Map.Map (Int, Int) Cell -> Int -> Int -> Bool -- is the move valid?
 -- well, when is a move invalid?
@@ -81,5 +84,50 @@ play game = do
 		print game'
 		return (game')
 
+loadImage :: String -> IO Surface
+loadImage filename = load filename >>= displayFormat
 
-main = play initialGame
+applySurface :: Int -> Int -> Surface -> Surface -> IO Bool
+applySurface x y src dst = blitSurface src Nothing dst offset
+ where offset = Just Rect { rectX = x, rectY = y, rectW = 0, rectH = 0 }
+
+-- main = play initialGame
+display :: Game -> Surface -> IO Bool
+display game@(Game board player) screen = do
+	sequence_ $ Map.elems $ Map.mapWithKey displayCell board
+	return True
+	where
+		cellSurface = Map.fromList [(O, loadImage "O.png"), (X, loadImage "X.png"), (Blank, loadImage "_.png")]
+		displayCell (i,j) cell = do
+			cs <- cellSurface Map.! cell
+			applySurface (i*160) (j*160) (cs) screen
+
+{-
+whileEvents :: MonadIO m => (Event -> m ()) -> m Bool
+whileEvents act = do
+    event <- liftIO pollEvent
+    case event of
+        Quit -> return True
+        NoEvent -> return False
+        _       ->  do
+            act event
+            whileEvents act
+-}
+
+main = withInit [InitEverything] $ do
+
+	screen <- setVideoMode screenWidth screenHeight screenBpp [SWSurface]
+	setCaption "Tic-Tac-Toe" []
+
+--	oh <- loadImage "O.png"
+
+--	applySurface 0 0 oh screen
+	display (takeTurn initialGame (1,1)) screen
+
+	Graphics.UI.SDL.flip screen
+
+	delay 2000
+ where
+ 	screenWidth = 640
+ 	screenHeight = 480
+ 	screenBpp = 32
