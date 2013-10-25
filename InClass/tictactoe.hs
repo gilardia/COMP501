@@ -6,7 +6,7 @@ module Main (Cell(Blank, X, O), Game, switch, board, player, initialGame, takeTu
 -- Define a tic-tac-toe board type
 
 import Graphics.UI.SDL
-import Graphics.UI.SDL.Image
+--import Graphics.UI.SDL.Image
 import qualified Data.Map as Map
 import Data.List
 -- analogous to import in Java
@@ -85,7 +85,7 @@ play game = do
 		return (game')
 
 loadImage :: String -> IO Surface
-loadImage filename = load filename >>= displayFormat
+loadImage filename = loadBMP filename >>= displayFormat
 
 applySurface :: Int -> Int -> Surface -> Surface -> IO Bool
 applySurface x y src dst = blitSurface src Nothing dst offset
@@ -97,7 +97,7 @@ display game@(Game board player) screen = do
 	sequence_ $ Map.elems $ Map.mapWithKey displayCell board
 	return True
 	where
-		cellSurface = Map.fromList [(O, loadImage "O.png"), (X, loadImage "X.png"), (Blank, loadImage "_.png")]
+		cellSurface = Map.fromList [(O, loadImage "O.bmp"), (X, loadImage "X.bmp"), (Blank, loadImage "_.bmp")]
 		displayCell (i,j) cell = do
 			cs <- cellSurface Map.! cell
 			applySurface (i*160) (j*160) (cs) screen
