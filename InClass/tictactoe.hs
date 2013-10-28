@@ -95,6 +95,7 @@ applySurface x y src dst = blitSurface src Nothing dst offset
 display :: Game -> Surface -> IO Bool
 display game@(Game board player) screen = do
 	sequence_ $ Map.elems $ Map.mapWithKey displayCell board
+	Graphics.UI.SDL.flip screen
 	return True
 	where
 		cellSurface = Map.fromList [(O, loadImage "O.bmp"), (X, loadImage "X.bmp"), (Blank, loadImage "_.bmp")]
@@ -102,31 +103,34 @@ display game@(Game board player) screen = do
 			cs <- cellSurface Map.! cell
 			applySurface (i*160) (j*160) (cs) screen
 
-{-
-whileEvents :: MonadIO m => (Event -> m ()) -> m Bool
-whileEvents act = do
-    event <- liftIO pollEvent
-    case event of
-        Quit -> return True
-        NoEvent -> return False
-        _       ->  do
-            act event
-            whileEvents act
--}
+handleMouse (MouseButtonDown x y ButtonLeft) game@(Game board player) = 
+	takeTurn game (i, j)
+ where i = fromIntegral $ x `quot` 160
+       j = fromIntegral $ y `quot` 160
+
+handleMouse _ game@(Game board player) = game
+
+loop game screen = do
+	display game screen
+	event <- pollEvent
+	case event of
+		Quit -> return True
+		_ -> do 
+			let game' = handleMouse event game
+			if not $ gameOver $ board $ game' then
+				loop game' screen
+			else do
+				display game' screen
+				delay 2000
+				return True
 
 main = withInit [InitEverything] $ do
 
 	screen <- setVideoMode screenWidth screenHeight screenBpp [SWSurface]
 	setCaption "Tic-Tac-Toe" []
 
---	oh <- loadImage "O.png"
+	loop initialGame screen
 
---	applySurface 0 0 oh screen
-	display (takeTurn initialGame (1,1)) screen
-
-	Graphics.UI.SDL.flip screen
-
-	delay 2000
  where
  	screenWidth = 640
  	screenHeight = 480
