@@ -44,8 +44,8 @@ takeTurn game@Game { board=b, player=p } (i, j)
 	| otherwise = game -- otherwise, the game state doesn't change
  where
  	newGame = Game {
- 		board = b, -- FIXME might want to use Map.adjust here to change the board,
- 		player = p -- FIXME might want to switch the player if the player didn't just win.
+ 		board = Map.adjust (\_ -> p) (i,j) b, -- FIXME might want to use Map.adjust here to change the board,
+ 		player = switch p -- FIXME might want to switch the player if the player didn't just win.
 	}
 
 switch :: Cell -> Cell -- switch players: x becomes o, o becomes x
@@ -56,11 +56,16 @@ validMove :: Map.Map (Int, Int) Cell -> Int -> Int -> Bool -- is the move valid?
 -- well, when is a move invalid?
 -- when the number is outside the bounds of the board
 -- when the cell has already been played (it's not blank)
-validMove board i j = False -- FIXME
+validMove board i j
+	| i < 0 || i >= 3 = False
+	| j < 0 || j >= 3 = False
+	| otherwise = Blank == board Map.! (i,j)
 
 diagonals :: Map.Map (Int, Int) Cell -> [[Cell]] -- get a list of diagonals
-diagonals board = [[]] -- FIXME
+diagonals board = [[board Map.! (0,0), board Map.! (1,1), board Map.! (2,2)],
+[board Map.! (2,0), board Map.! (1,1), board Map.! (0,2)]] -- FIXME
 
+-- convert the board into lists of lists, and call the map function
 winner :: Map.Map (Int, Int) Cell -> Bool -- is there a winner?
 winner board = False -- FIXME
 
@@ -95,20 +100,23 @@ applySurface x y src dst = blitSurface src Nothing dst offset
 display :: Game -> Surface -> IO Bool
 display game@(Game board player) screen = do
 	sequence_ $ Map.elems $ Map.mapWithKey displayCell board
-	Graphics.UI.SDL.flip screen
+	Graphics.UI.SDL.flip screen -- where the actual draw happens
 	return True
 	where
+		-- cellSurface is a lookup table from Cell -> IO Surface
 		cellSurface = Map.fromList [(O, loadImage "O.bmp"), (X, loadImage "X.bmp"), (Blank, loadImage "_.bmp")]
 		displayCell (i,j) cell = do
 			cs <- cellSurface Map.! cell
 			applySurface (i*160) (j*160) (cs) screen
 
-handleMouse (MouseButtonDown x y ButtonLeft) game@(Game board player) = 
+handleMouse :: Event -> Game -> Game
+handleMouse (MouseButtonDown x y ButtonLeft) game = 
 	takeTurn game (i, j)
  where i = fromIntegral $ x `quot` 160
        j = fromIntegral $ y `quot` 160
 
-handleMouse _ game@(Game board player) = game
+-- don't care about the other events
+handleMouse _ game = game
 
 loop game screen = do
 	display game screen
@@ -130,7 +138,6 @@ main = withInit [InitEverything] $ do
 	setCaption "Tic-Tac-Toe" []
 
 	loop initialGame screen
-
  where
  	screenWidth = 640
  	screenHeight = 480
