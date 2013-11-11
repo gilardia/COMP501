@@ -5,7 +5,7 @@ module Main (Cell(Blank, X, O), Game, switch, board, player, initialGame, takeTu
 
 -- Define a tic-tac-toe board type
 
-import Graphics.UI.SDL
+--import Graphics.UI.SDL
 --import Graphics.UI.SDL.Image
 import qualified Data.Map as Map
 import Data.List
@@ -29,7 +29,9 @@ data Game = Game { -- sorta like a struct (e.g., struct Game { Cell[3][3] board;
 initialGame = Game initialBoard X
 
 instance Show Game where -- sorta like implementing an interface, (e.g., Game implements Show)
-	show Game { board=b, player=p } = "It's player " ++ show p ++ "'s turn\n" ++
+	show Game { board=b, player=p }
+		|winner b = "Horray!"
+		| otherwise = "It's player " ++ show p ++ "'s turn\n" ++
 		(foldl1 rows $ map (foldl1 cols . map show) $ unMap b)
 	 where
 	 	rows x y = x ++ "\n-----------\n" ++ y
@@ -37,6 +39,8 @@ instance Show Game where -- sorta like implementing an interface, (e.g., Game im
 
 unMap :: Map.Map (Int, Int) Cell -> [[Cell]]
 unMap board = map (map snd) $ groupBy (\((i,j),_) ((k,l),_) -> i == k) $ Map.assocs board
+
+
 
 takeTurn :: Game -> (Int, Int) -> Game
 takeTurn game@Game { board=b, player=p } (i, j)
@@ -63,14 +67,16 @@ validMove board i j
 
 diagonals :: Map.Map (Int, Int) Cell -> [[Cell]] -- get a list of diagonals
 diagonals board = [[board Map.! (0,0), board Map.! (1,1), board Map.! (2,2)],
-[board Map.! (2,0), board Map.! (1,1), board Map.! (0,2)]] -- FIXME
+	[board Map.! (2,0), board Map.! (1,1), board Map.! (0,2)]] -- FIXME
 
 -- convert the board into lists of lists, and call the map function
 winner :: Map.Map (Int, Int) Cell -> Bool -- is there a winner?
-winner board = False -- FIXME
+winner board = any win ((unMap board) ++ (diagonals board ) ++ (transpose $ unMap board))-- FIXME
+
+win slice = foldl1 (\x y -> if x -- y then x else Blank) slice /= Blank
 
 gameOver :: Map.Map (Int, Int) Cell -> Bool -- is the game over? either somebody won, or there's no blanks left
-gameOver board = False -- FIXME
+gameOver board = winner board -- FIXME
 
 play :: Game -> IO Game
 play game = do
@@ -139,6 +145,6 @@ main = withInit [InitEverything] $ do
 
 	loop initialGame screen
  where
- 	screenWidth = 640
+ 	screenWidth = 480
  	screenHeight = 480
  	screenBpp = 32
